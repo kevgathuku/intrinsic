@@ -39,6 +39,56 @@ class FinancialPeriod(models.Model):
             self.end_date)
 
 
+class BalanceSheet(models.Model):
+    """Represents a company's balance sheet portion of results"""
+
+    company = models.ForeignKey(Company)
+    results_url = models.URLField(blank=True, null=True)
+    financial_period = models.ForeignKey(FinancialPeriod)
+
+
+class IncomeStatement(models.Model):
+    """Represents a company's income statement portion of results"""
+
+    company = models.ForeignKey(Company)
+    results_url = models.URLField(blank=True, null=True)
+    financial_period = models.ForeignKey(FinancialPeriod)
+
+    revenue = models.IntegerField()
+    other_revenue = models.IntegerField()
+    cost_of_revenue = models.IntegerField()
+
+    operating_expenses = models.IntegerField()
+
+    non_operating_income = models.IntegerField()
+    other_income = models.IntegerField()
+
+    provision_for_income_taxes = models.IntegerField()
+
+    extraordinary_items = models.IntegerField(blank=True, default=0)
+
+    @property
+    def gross_profit(self):
+        return (self.revenue + self.other_revenue) - self.cost_of_revenue
+
+    @property
+    def operating_income(self):
+        return self.gross_profit - self.operating_expenses
+
+    @property
+    def net_income_before_taxes(self):
+        return self.operating_income + \
+            (self.non_operating_income + self.other_income)
+
+    @property
+    def net_income_after_taxes(self):
+        return self.net_income_before_taxes - self.provision_for_income_taxes
+
+    @property
+    def net_income(self):
+        return self.net_income_after_taxes - self.extraordinary_items
+
+
 class Result(models.Model):
     """
     Stores a Company's Declared Results for a Specific Accounting Period
@@ -46,7 +96,7 @@ class Result(models.Model):
 
     results_url = models.URLField(blank=True, null=True)
 
-    company = models.ForeignKey(Company, unique_for_date='period_end_date')
+    company = models.ForeignKey(Company)
 
     earnings = models.IntegerField(help_text="Profit after tax for the period")
     debt = models.IntegerField(
