@@ -9,9 +9,8 @@ class CompanyAdmin(admin.ModelAdmin):
 
 class ResultAdmin(admin.ModelAdmin):
     list_display = (
-        'company', 'period_end_date', 'period_length', 'earnings',
-        'book_value', 'EPS', 'current_ratio', 'debt_equity_ratio',
-        'results_url')
+        'company', 'earnings', 'book_value', 'EPS',
+        'current_ratio', 'debt_equity_ratio', 'results_url')
 
 
 admin.site.register(Company, CompanyAdmin)

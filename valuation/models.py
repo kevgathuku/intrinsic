@@ -4,6 +4,10 @@ from django.db import models
 
 
 class Company(models.Model):
+    """
+    Represents a Company whose shared are traded in the Stock Exchange
+    """
+
     name = models.CharField(max_length=50)
     symbol = models.CharField(max_length=5, blank=True)
 
@@ -14,25 +18,33 @@ class Company(models.Model):
         return self.name
 
 
+class FinancialPeriod(models.Model):
+    DURATION_CHOICES = (
+        (3, '3 Months'),
+        (6, 'Half Year'),
+        (9, '9 Months'),
+        (12, 'Full Year'),
+    )
+
+    end_date = models.DateField()
+    duration = models.IntegerField(
+        choices=DURATION_CHOICES,
+        # Set default explicitly from the DURATION_CHOICES tuple (12 months)
+        default=DURATION_CHOICES[2][0],
+        help_text="Length of the period for which the results belong to")
+
+    def __unicode__(self):
+        return "Results for the {} financial period ended {:%d %B %Y}".format(
+            self.duration,
+            self.end_date)
+
+
 class Result(models.Model):
     """
     Stores a Company's Declared Results for a Specific Accounting Period
     """
 
     results_url = models.URLField(blank=True, null=True)
-
-    PERIOD_CHOICES = (
-        (6, '6 Months'),
-        (9, '9 Months'),
-        (12, 'Full Year'),
-    )
-
-    period_end_date = models.DateField()
-    period_length = models.IntegerField(
-        choices=PERIOD_CHOICES,
-        # Set default explicitly from the PERIOD_CHOICES tuple (12 months)
-        default=PERIOD_CHOICES[2][0],
-        help_text="Length of the period for which the results belong to")
 
     company = models.ForeignKey(Company, unique_for_date='period_end_date')
 
