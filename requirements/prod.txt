@@ -1,3 +1,0 @@
--r base.txt
-waitress==1.0.1
-dj-static==0.0.6
