@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :intrinsic, Intrinsic.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "",
   database: "intrinsic_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
