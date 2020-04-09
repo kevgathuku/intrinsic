@@ -23,7 +23,7 @@ class Company(models.Model):
     class Meta:
         verbose_name_plural = "Companies"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -34,14 +34,14 @@ class BalanceSheet(models.Model):
     duration = models.PositiveSmallIntegerField(
         choices=DURATION_CHOICES,
         # Set default explicitly from the DURATION_CHOICES tuple (12 months)
-        default=DURATION_CHOICES[2][0],
+        default=DURATION_CHOICES[3][0],
         help_text="Financial Period which the results belong to")
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
-    equity = models.BigIntegerField(help_text="Shareholders' Equity")
-    liabilities = models.BigIntegerField(help_text="Total Liabilities")
-    assets = models.BigIntegerField(help_text="Total Assets")
+    equity = models.BigIntegerField(help_text="Shareholders' Equity", blank=True, default=0)
+    liabilities = models.BigIntegerField(help_text="Total Liabilities", blank=True, default=0)
+    assets = models.BigIntegerField(help_text="Total Assets", blank=True, default=0)
 
     debt = models.BigIntegerField(help_text="Total Borrowed Funds", blank=True, default=0)
 
@@ -56,11 +56,11 @@ class BalanceSheet(models.Model):
     def debt_equity_ratio(self):
         return self.debt / self.equity
 
-    def __unicode__(self):
+    def __str__(self):
         return "{}: Balance Sheet for the {} months ending {:%d %B %Y}".format(
             self.company.name,
-            self.period_length,
-            self.financial_period.end_date)
+            self.duration,
+            self.date)
 
 
 class IncomeStatement(models.Model):
@@ -70,7 +70,7 @@ class IncomeStatement(models.Model):
     duration = models.PositiveSmallIntegerField(
         choices=DURATION_CHOICES,
         # Set default explicitly from the DURATION_CHOICES tuple (12 months)
-        default=DURATION_CHOICES[2][0],
+        default=DURATION_CHOICES[3][0],
         help_text="Length of the period for which the results belong to")
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
@@ -86,8 +86,8 @@ class IncomeStatement(models.Model):
     def eps(self):
         return self.net_income / self.company.outstanding_shares
 
-    def __unicode__(self):
+    def __str__(self):
         return "{}: Income Statement for the {} months ending {:%d %B %Y}".format(
             self.company.name,
-            self.period_length,
-            self.financial_period.end_date)
+            self.duration,
+            self.date)
