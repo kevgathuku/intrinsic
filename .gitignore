@@ -1,34 +1,109 @@
-# The directory Mix will write compiled artifacts to.
-/_build/
+# Created by https://www.gitignore.io/api/python
+# Edit at https://www.gitignore.io/?templates=python
 
-# If you run "mix test --cover", coverage assets end up here.
-/cover/
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# The directory Mix downloads your dependencies sources to.
-/deps/
+# C extensions
+*.so
 
-# Where 3rd-party dependencies like ExDoc output generated docs.
-/doc/
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Ignore .fetch files in case you like to edit your project deps locally.
-/.fetch
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
 
-# If the VM crashes, it generates a dump, let's ignore it too.
-erl_crash.dump
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Also ignore archive artifacts (built via "mix archive.build").
-*.ez
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
 
-# Ignore package tarball (built via "mix hex.build").
-intrinsic-*.tar
+# Translations
+*.mo
+*.pot
 
-# If NPM crashes, it generates a log, let's ignore it too.
-npm-debug.log
+# Scrapy stuff:
+.scrapy
 
-# The directory NPM downloads your dependencies sources to.
-/assets/node_modules/
+# Sphinx documentation
+docs/_build/
 
-# Since we are building assets from assets/,
-# we ignore priv/static. You may want to comment
-# this depending on your deployment strategy.
-/priv/static/
+# PyBuilder
+target/
+
+# pyenv
+.python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# End of https://www.gitignore.io/api/python
